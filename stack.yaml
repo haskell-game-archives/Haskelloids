@@ -1,6 +1,1 @@
-resolver: lts-14.21
-packages:
-- .
-extra-deps:
-- HGL-3.2.3.2@sha256:35922953927a1d68845c6446ff69952c5303412cee3e3a2d95c1449132f90eef,2116
-- Yampa-0.10.7@sha256:4a7d94ebce33e9863b14e637cdb99fad313345dbe08a4d142a649ba45a40c38d,5009
+stack-lts-14.yaml
