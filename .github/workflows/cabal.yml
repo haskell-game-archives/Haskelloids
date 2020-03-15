@@ -42,7 +42,7 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev
+        sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxss-dev
 
     - name: Install dependencies
       run: |
