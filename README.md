@@ -1,3 +1,6 @@
+![stack](https://github.com/haskell-game-archives/Haskelloids/workflows/stack/badge.svg)
+![cabal](https://github.com/haskell-game-archives/Haskelloids/workflows/cabal/badge.svg)
+
 # Installation
 
 1. Download and install stack from <https://www.haskellstack.org>.
