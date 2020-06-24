@@ -46,16 +46,22 @@ jobs:
         brew update
         brew cask install xquartz
 
-    - name: Install dependencies
+    - name: Install dependencies & Build (Linux)
+      if: runner.os == 'Linux'
       env:
-        STACK_YAML: stack-${{ matrix.resolver }}.yaml
+        STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
         stack config set resolver ${{ matrix.resolver }}
         stack test --only-dependencies
+        stack test --fast
+        stack install --fast
 
-    - name: Build
+    - name: Install dependencies & Build (mac)
+      if: runner.os == 'macOS'
       env:
-        STACK_YAML: stack-${{ matrix.resolver }}.yaml
+        STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
+        stack config set resolver ${{ matrix.resolver }}
+        stack test --only-dependencies
         stack test --fast
         stack install --fast
