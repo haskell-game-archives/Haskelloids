@@ -12,12 +12,10 @@ module Haskelloids.Object
   )
 where
 
-import Control.Arrow ((&&&), returnA)
+import Control.Arrow (returnA, (&&&))
 import Data.IdentityList (ILKey)
 import FRP.Yampa
-  ( (>>>),
-    (>>^),
-    DTime,
+  ( DTime,
     Event (..),
     SF,
     after,
@@ -28,6 +26,8 @@ import FRP.Yampa
     merge,
     once,
     switch,
+    (>>>),
+    (>>^),
   )
 import Graphics.HGL (Graphic)
 import Haskelloids.Geometry (Point2, Shape, intersect)

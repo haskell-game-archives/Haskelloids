@@ -14,7 +14,7 @@ module Main (main) where
 -- Import random
 
 -- Import control structures
-import Control.Arrow ((&&&), returnA)
+import Control.Arrow (returnA, (&&&))
 import Control.Monad (replicateM)
 import Control.Monad.Random
   ( Rand,
@@ -41,14 +41,9 @@ import Data.Version (showVersion)
 
 -- Import Yampa framework
 import FRP.Yampa
-  ( (<<<),
-    (<<^),
-    (>>>),
-    DTime,
+  ( DTime,
     Event (..),
     SF,
-    (^<<),
-    (^>>),
     accum,
     accumHold,
     arr,
@@ -67,6 +62,11 @@ import FRP.Yampa
     switch,
     tag,
     tagWith,
+    (<<<),
+    (<<^),
+    (>>>),
+    (^<<),
+    (^>>),
   )
 import Graphics.HGL (overGraphics, runGraphics)
 import Graphics.HGL.Window

@@ -8,7 +8,7 @@ where
 
 import Control.Arrow (returnA)
 import Control.Monad.Random (Rand, RandomGen, getRandomR)
-import FRP.Yampa (Event (..), (^<<), after, integral)
+import FRP.Yampa (Event (..), after, integral, (^<<))
 import Haskelloids.Geometry (Angle, Figure (..), Point2, origin, shape)
 import Haskelloids.Graphics (drawFigure)
 import Haskelloids.Object (Object, ObjectClass (..), ObjectOutput (..))

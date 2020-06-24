@@ -9,7 +9,7 @@ where
 -- import control structures
 import Control.Arrow (returnA)
 -- import Yampa framework
-import FRP.Yampa ((<<<), Event (..), (^<<), arr, edge, merge, time)
+import FRP.Yampa (Event (..), arr, edge, merge, time, (<<<), (^<<))
 -- import graphics and geometry
 import Haskelloids.Geometry (Angle, Figure (..), Point, Point2, origin, shape)
 import Haskelloids.Graphics (drawShape)

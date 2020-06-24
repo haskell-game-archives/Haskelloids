@@ -115,9 +115,9 @@ shipSF (w, h) (x0, y0) = proc oi -> do
           ooCllsnBox = shape . Translate (x, y) . Rotate o $ cllsnFigure,
           ooGraphic = do
             drawFigure . Translate (x, y) . Rotate o $ shipFigure
-            when (isEvent dt)
-              $ drawFigure . Translate (x, y) . Rotate o
-              $ thrustersFig,
+            when (isEvent dt) $
+              drawFigure . Translate (x, y) . Rotate o $
+                thrustersFig,
           ooSpawnReq = f `tag` [blltSpwn (x, y) (vx, vy) o],
           ooObjClass = Ship,
           ooKillReq = die
