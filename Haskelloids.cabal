@@ -10,7 +10,7 @@ maintainer:    mrehayden@googlemail.com
 stability:     Alpha
 category:      Game
 build-type:    Simple
-tested-with:   GHC ==8.6.5 || ==8.8.2
+tested-with:   GHC ==8.6.5 || ==8.8.3 || ==8.10.1
 
 executable Haskelloids
   hs-source-dirs:   src
@@ -25,16 +25,17 @@ executable Haskelloids
     Haskelloids.Object.Bullet
     Haskelloids.Object.Dust
     Haskelloids.Object.Ship
+    Paths_Haskelloids
 
   main-is:          Haskelloids.hs
   build-depends:
-    , base         >=4.12 && <4.14
-    , containers
+    , base         >=4.12 && <4.15
+    , containers   ^>=0.6
     , HGL          ^>=3.2
     , matrix       ^>=0.3
     , MonadRandom  ^>=0.5
     , random       ^>=1.1
-    , vector
+    , vector       ^>=0.12
     , Yampa        ^>=0.13
 
   default-language: Haskell2010

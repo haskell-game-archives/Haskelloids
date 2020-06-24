@@ -1,19 +1,32 @@
 {-# LANGUAGE Arrows #-}
-module Haskelloids.Object.Ship (shipSF,
-                                shipFigure
-                               ) where
 
-import Control.Arrow (returnA, (***))
+module Haskelloids.Object.Ship
+  ( shipSF,
+    shipFigure,
+  )
+where
 
-import Haskelloids.Geometry (Figure(..), Shape(..), Point, Point2, Angle, shape)
-import Haskelloids.Graphics (Graphic, drawFigure, drawShape)
-
-import FRP.Yampa (Event(..), (^<<), (<<^), (<<<), arr, constant, hold, integral,
-                  gate, isEvent, tag, mergeBy)
-
-import Haskelloids.Input (UserInput(..))
-import Haskelloids.Object (Object, ObjectClass(..), ObjectInput(..),
-                           ObjectOutput(..), teleport, reload)
+import Control.Arrow
+import Control.Monad
+import FRP.Yampa
+  ( Event (..),
+    gate,
+    hold,
+    integral,
+    isEvent,
+    tag,
+  )
+import Haskelloids.Geometry (Angle, Figure (..), Point, Point2, shape)
+import Haskelloids.Graphics (drawFigure)
+import Haskelloids.Input (UserInput (..))
+import Haskelloids.Object
+  ( Object,
+    ObjectClass (..),
+    ObjectInput (..),
+    ObjectOutput (..),
+    reload,
+    teleport,
+  )
 import Haskelloids.Object.Bullet (bulletSF)
 
 -- #### Program constants ######################################################
@@ -63,31 +76,30 @@ thrusterFlickerPeriod = 0.05
 shipSF :: Point -> Point2 -> Object
 shipSF (w, h) (x0, y0) = proc oi -> do
   let ui = oiUserInput oi
-  l  <- (\d -> if d then -turnRate else 0.0) ^<< hold False -< uiTurnLeft  ui
-  r  <- (\d -> if d then  turnRate else 0.0) ^<< hold False -< uiTurnRight ui
+  l <- (\d -> if d then - turnRate else 0.0) ^<< hold False -< uiTurnLeft ui
+  r <- (\d -> if d then turnRate else 0.0) ^<< hold False -< uiTurnRight ui
 
   -- calculate orientation...
-  o  <- ((-pi/2)+) ^<< integral -< l + r
+  o <- ((- pi / 2) +) ^<< integral -< l + r
 
   -- ...velocity and acceleration...
-  t  <- hold False -< uiThrust ui
+  t <- hold False -< uiThrust ui
   th <- arr (\d -> if d then accel else 0.0) -< t
   let tx = th * cos o
       ty = th * sin o
 
-  rec
-    ax <- uncurry (-) ^<< (returnA *** ((* frictionLoss) ^<< integral)) -< (tx, ax)
-    ay <- uncurry (-) ^<< (returnA *** ((* frictionLoss) ^<< integral)) -< (ty, ay)
+  rec ax <- uncurry (-) ^<< (returnA *** ((* frictionLoss) ^<< integral)) -< (tx, ax)
+      ay <- uncurry (-) ^<< (returnA *** ((* frictionLoss) ^<< integral)) -< (ty, ay)
 
   vx <- integral -< ax
   vy <- integral -< ay
 
   -- ...position
-  x  <- teleport w buffer x0 -< vx
-  y  <- teleport h buffer y0 -< vy
+  x <- teleport w buffer x0 -< vx
+  y <- teleport h buffer y0 -< vy
 
   -- is the user firing? have we reloaded our guns?
-  f  <- reload reloadTime -< uiFire ui
+  f <- reload reloadTime -< uiFire ui
 
   -- are we drawing the thrusters?
   dt <- reload thrusterFlickerPeriod <<^ gate (Event ()) -< t
@@ -96,24 +108,28 @@ shipSF (w, h) (x0, y0) = proc oi -> do
   die <- arr oiHit -< oi
 
   -- ...return observable state
-  returnA -<
-    ObjectOutput {
-      ooPos      = (x,y),
-      ooCllsnBox = shape . Translate (x,y) . Rotate o $ cllsnFigure,
-      ooGraphic  = do { drawFigure . Translate (x,y) . Rotate o $ shipFigure
-                      ; if isEvent dt
-                         then drawFigure . Translate (x,y) . Rotate o $ thrustersFig
-                         else return () },
-      ooSpawnReq = f `tag` [blltSpwn (x,y) (vx,vy) o],
-      ooObjClass = Ship,
-      ooKillReq  = die
-    }
- where
-   -- blltSpwn - create a new bullet signal function
-   blltSpwn :: Point2 -> Point2 -> Angle -> Object
-   blltSpwn (x0,y0) (vx, vy) o =
-     let (x, y) = (x0 + (bulletBox * cos o),
-                   y0 + (bulletBox * sin o))
-     in bulletSF (w, h) (x,y) (vx, vy) o
+  returnA
+    -<
+      ObjectOutput
+        { ooPos = (x, y),
+          ooCllsnBox = shape . Translate (x, y) . Rotate o $ cllsnFigure,
+          ooGraphic = do
+            drawFigure . Translate (x, y) . Rotate o $ shipFigure
+            when (isEvent dt)
+              $ drawFigure . Translate (x, y) . Rotate o
+              $ thrustersFig,
+          ooSpawnReq = f `tag` [blltSpwn (x, y) (vx, vy) o],
+          ooObjClass = Ship,
+          ooKillReq = die
+        }
+  where
+    -- blltSpwn - create a new bullet signal function
+    blltSpwn :: Point2 -> Point2 -> Angle -> Object
+    blltSpwn (x0', y0') (vx, vy) o =
+      let (x, y) =
+            ( x0' + (bulletBox * cos o),
+              y0' + (bulletBox * sin o)
+            )
+       in bulletSF (w, h) (x, y) (vx, vy) o
 
 -- #### Function definitions ###################################################
