@@ -1,22 +1,23 @@
-module Haskelloids.Graphics (Graphic,
-                             drawShape,
-                             drawFigure
-                            ) where
+module Haskelloids.Graphics
+  ( Graphic,
+    drawShape,
+    drawFigure,
+  )
+where
 
 import Control.Arrow ((***))
-
 import Graphics.HGL.Draw (Graphic)
 import Graphics.HGL.Draw.Picture (ellipse, polyline)
-
-import Haskelloids.Geometry (Figure, Shape(..), shape)
+import Haskelloids.Geometry (Figure, Shape (..), shape)
 
 drawFigure :: Figure -> Graphic
-drawFigure f = drawShape . shape $ f
+drawFigure = drawShape . shape
 
 drawShape :: Shape -> Graphic
-drawShape (Ln ps)        = polyline . map (round *** round) $ ps
-drawShape (Poly ps)      = polyline . map (round *** round) $ ps
-drawShape (Circ (x,y) r) = ellipse (x'-r', y'-r') (x'+r', y'+r')
-  where x' = round x
-        y' = round y
-        r' = round r
+drawShape (Ln ps) = polyline . map (round *** round) $ ps
+drawShape (Poly ps) = polyline . map (round *** round) $ ps
+drawShape (Circ (x, y) r) = ellipse (x' - r', y' - r') (x' + r', y' + r')
+  where
+    x' = round x
+    y' = round y
+    r' = round r

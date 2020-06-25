@@ -16,20 +16,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [ubuntu-18.04, macos-10.15]
-        os: [ubuntu-18.04]
-        resolver: ["lts-14", "lts-15", "nightly"]
-        cache-version: ["2020-03-15"]
+        os: [ubuntu-18.04, macos-10.15]
+        resolver: ["lts-14", "lts-16", "nightly"]
+        cache-version: ["2020-06-24"]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: mstksg/setup-stack@v2
-
-    - name: Display stack version
-      run: stack --version
+    - uses: actions/setup-haskell@v1.1
+      with:
+        ghc-version: "8.8.3"
+        stack-version: "2.3.1"
+        enable-stack: true
 
     - name: Cache ~/.stack
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: ~/.stack
         key: ${{ runner.os }}-${{ matrix.resolver }}-${{ matrix.cache-version }}-stack
@@ -39,17 +39,29 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxss-dev
+    
+    - name: Install libralies (mac)
+      if: runner.os == 'macOS'
+      run: |
+        brew update
+        brew cask install xquartz
 
-    - name: Install dependencies
+    - name: Install dependencies & Build (Linux)
+      if: runner.os == 'Linux'
       env:
-        STACK_YAML: stack-${{ matrix.resolver }}.yaml
+        STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
         stack config set resolver ${{ matrix.resolver }}
         stack test --only-dependencies
+        stack test --fast
+        stack install --fast
 
-    - name: Build
+    - name: Install dependencies & Build (mac)
+      if: runner.os == 'macOS'
       env:
-        STACK_YAML: stack-${{ matrix.resolver }}.yaml
+        STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
+        stack config set resolver ${{ matrix.resolver }}
+        stack test --only-dependencies
         stack test --fast
         stack install --fast

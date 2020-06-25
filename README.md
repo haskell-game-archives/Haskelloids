@@ -1,5 +1,6 @@
 ![stack](https://github.com/haskell-game-archives/Haskelloids/workflows/stack/badge.svg)
 ![cabal](https://github.com/haskell-game-archives/Haskelloids/workflows/cabal/badge.svg)
+![lint](https://github.com/haskell-game-archives/Haskelloids/workflows/lint/badge.svg)
 
 # Installation
 

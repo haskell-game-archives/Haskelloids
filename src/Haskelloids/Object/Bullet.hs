@@ -1,21 +1,26 @@
-{-# LANGUAGE Arrows       #-}
+{-# LANGUAGE Arrows #-}
 {-# LANGUAGE BangPatterns #-}
-module Haskelloids.Object.Bullet (bulletSF
-                                 ) where
+
+module Haskelloids.Object.Bullet
+  ( bulletSF,
+  )
+where
 
 -- import control structures
 import Control.Arrow (returnA)
-
 -- import Yampa framework
-import FRP.Yampa (Event(..), integral, edge, time, (^<<), (<<<), arr, merge)
-
+import FRP.Yampa (Event (..), arr, edge, merge, time, (<<<), (^<<))
 -- import graphics and geometry
-import Haskelloids.Geometry (Point, Point2, Angle, Figure(..), origin, shape)
-import Haskelloids.Graphics (Graphic, drawShape)
-
+import Haskelloids.Geometry (Angle, Figure (..), Point, Point2, origin, shape)
+import Haskelloids.Graphics (drawShape)
 -- import game objects and interface
-import Haskelloids.Object (Object, ObjectClass(..), ObjectInput(..),
-                           ObjectOutput(..), teleport)
+import Haskelloids.Object
+  ( Object,
+    ObjectClass (..),
+    ObjectInput (..),
+    ObjectOutput (..),
+    teleport,
+  )
 
 -- #### Program constants ######################################################
 
@@ -41,23 +46,24 @@ bulletSF :: Point -> Point2 -> Point2 -> Angle -> Object
 bulletSF (w, h) (x0, y0) (vx0, vy0) o =
   let !vx = vx0 + bulletSpeed * cos o
       !vy = vy0 + bulletSpeed * sin o
-  in proc oi -> do
-       x <- teleport w buffer x0 -< vx
-       y <- teleport h buffer y0 -< vy
+   in proc oi -> do
+        x <- teleport w buffer x0 -< vx
+        y <- teleport h buffer y0 -< vy
 
-       let bulShape = shape . Translate (x,y) $ bulletFigure
+        let bulShape = shape . Translate (x, y) $ bulletFigure
 
-       die <- edge <<< (> bulletMaxAge) ^<< time -< ()
-       hit <- arr oiHit -< oi
+        die <- edge <<< (> bulletMaxAge) ^<< time -< ()
+        hit <- arr oiHit -< oi
 
-       returnA -<
-          ObjectOutput {
-            ooPos      = (x,y),
-            ooCllsnBox = bulShape,
-            ooGraphic  = drawShape bulShape,
-            ooSpawnReq = NoEvent,
-            ooObjClass = Bullet,
-            ooKillReq  = merge die hit
-          }
+        returnA
+          -<
+            ObjectOutput
+              { ooPos = (x, y),
+                ooCllsnBox = bulShape,
+                ooGraphic = drawShape bulShape,
+                ooSpawnReq = NoEvent,
+                ooObjClass = Bullet,
+                ooKillReq = merge die hit
+              }
 
 -- #### Function definitions ###################################################
