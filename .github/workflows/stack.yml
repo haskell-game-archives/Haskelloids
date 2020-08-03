@@ -18,13 +18,13 @@ jobs:
       matrix:
         os: [ubuntu-18.04, macos-10.15]
         resolver: ["lts-14", "lts-16", "nightly"]
-        cache-version: ["2020-06-24"]
+        cache-version: ["2020-08-03"]
 
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/setup-haskell@v1.1
+    - uses: actions/setup-haskell@v1
       with:
-        ghc-version: "8.8.3"
+        ghc-version: "8.10.1"
         stack-version: "2.3.1"
         enable-stack: true
 
@@ -46,22 +46,16 @@ jobs:
         brew update
         brew cask install xquartz
 
-    - name: Install dependencies & Build (Linux)
-      if: runner.os == 'Linux'
+    - name: Install dependencies
       env:
         STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
         stack config set resolver ${{ matrix.resolver }}
         stack test --only-dependencies
-        stack test --fast
-        stack install --fast
 
-    - name: Install dependencies & Build (mac)
-      if: runner.os == 'macOS'
+    - name: Build
       env:
         STACK_YAML: stack-${{ matrix.resolver }}-mac.yaml
       run: |
-        stack config set resolver ${{ matrix.resolver }}
-        stack test --only-dependencies
         stack test --fast
         stack install --fast
