@@ -1,4 +1,4 @@
-resolver: nightly-2020-08-02 # ghc-8.10.1
+resolver: nightly-2020-10-23 # ghc-8.10.2
 packages:
 - .
 extra-deps:

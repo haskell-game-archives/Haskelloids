@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-18.04
     strategy:
       matrix:
-        ghc: ["8.6.5", "8.8.3", "8.10.1"]
-        cabal: ["3.2.0.0"]
-        cache-version: ["2020-08-03"]
+        ghc: ["8.6", "8.8", "8.10"]
+        cabal: ["3.2"]
+        cache-version: ["2020-10-23"]
 
     steps:
     - uses: actions/checkout@v2
@@ -32,8 +32,7 @@ jobs:
         path: ~/.cabal/store
         key: ${{ runner.os }}-${{ matrix.ghc }}-${{ matrix.cache-version }}-cabal
 
-    - name: Install libralies (linux)
-      if: runner.os == 'Linux'
+    - name: Install libralies
       run: |
         sudo apt-get update
         sudo apt-get install -y libx11-dev libxrandr-dev libxinerama-dev libxss-dev
