@@ -1,6 +1,6 @@
-![stack](https://github.com/haskell-game-archives/Haskelloids/workflows/stack/badge.svg)
-![cabal](https://github.com/haskell-game-archives/Haskelloids/workflows/cabal/badge.svg)
-![lint](https://github.com/haskell-game-archives/Haskelloids/workflows/lint/badge.svg)
+[![stack](https://github.com/haskell-game-archives/Haskelloids/workflows/stack/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Astack)
+[![cabal](https://github.com/haskell-game-archives/Haskelloids/workflows/cabal/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Acabal)
+[![lint](https://github.com/haskell-game-archives/Haskelloids/workflows/lint/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Alint)
 
 # Installation
 
@@ -19,4 +19,4 @@ $ cd Haskelloids
 
 4. Run and enjoy playing!
 
-`$ stack exec Haskelloids`
+`$ stack run Haskelloids`

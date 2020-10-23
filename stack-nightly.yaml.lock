@@ -20,7 +20,7 @@ packages:
     hackage: Yampa-0.13.1@sha256:4612a2646c27bcd3ac55c90dbc34249303e28aa5b3bc3e0c6fa9ce58b889843c,5436
 snapshots:
 - completed:
-    size: 523724
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/8/2.yaml
-    sha256: 11eb68ad07a271fe133c7df5ee5e811bbbd1c462c8b8c06c2aadfe1e10d442d4
-  original: nightly-2020-08-02
+    size: 541635
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/nightly/2020/10/23.yaml
+    sha256: ff158a60ee503b3e282295412894bc01337006cc8f5ab3a55daba0b196bd7288
+  original: nightly-2020-10-23
