@@ -1,6 +1,7 @@
 [![stack](https://github.com/haskell-game-archives/Haskelloids/workflows/stack/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Astack)
 [![cabal](https://github.com/haskell-game-archives/Haskelloids/workflows/cabal/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Acabal)
 [![lint](https://github.com/haskell-game-archives/Haskelloids/workflows/lint/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Alint)
+[![format](https://github.com/haskell-game-archives/Haskelloids/workflows/format/badge.svg)](https://github.com/haskell-game-archives/Haskelloids/actions?query=workflow%3Aformat)
 
 # Installation
 

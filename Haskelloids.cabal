@@ -56,3 +56,4 @@ executable Haskelloids
     , random       >=1.1 && <1.3
 
   other-modules: Paths_Haskelloids
+  ghc-options:   -O2
