@@ -38,7 +38,7 @@ jobs:
       if: runner.os == 'macOS'
       run: |
         brew update
-        brew cask install xquartz
+        brew install --cask xquartz
 
     # See: https://github.com/actions/cache/issues/445
     - name: Install GNU tar
