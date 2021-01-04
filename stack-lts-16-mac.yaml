@@ -2,5 +2,5 @@ resolver: lts-16.27 # ghc-8.8.4
 extra-deps:
 - HGL-3.2.3.2@sha256:35922953927a1d68845c6446ff69952c5303412cee3e3a2d95c1449132f90eef,2116
 - Yampa-0.13.1@sha256:4612a2646c27bcd3ac55c90dbc34249303e28aa5b3bc3e0c6fa9ce58b889843c,5436
-extra-lib-dirs: /opt/X11/lib
-extra-include-dirs: /opt/X11/include
+extra-lib-dirs: [/opt/X11/lib]
+extra-include-dirs: [/opt/X11/include]
