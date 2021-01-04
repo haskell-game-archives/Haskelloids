@@ -10,7 +10,7 @@ maintainer:    mrehayden@googlemail.com
 stability:     Alpha
 category:      Game
 build-type:    Simple
-tested-with:   GHC ==8.6.5 || ==8.8.4 || ==8.10.2
+tested-with:   GHC ==8.6.5 || ==8.8.4 || ==8.10.3
 
 source-repository head
   type:     git
